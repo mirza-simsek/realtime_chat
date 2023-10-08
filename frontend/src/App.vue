@@ -23,7 +23,7 @@
 
 <script>
 import {onMounted, ref} from "vue";
-import Pusher from 'pusher.js'
+import Pusher from "pusher-js";
 export default {
   name:'App',
   setup() {
@@ -34,20 +34,21 @@ export default {
     onMounted(() => {
       Pusher.logToConsole = true;
 
-      const pusher = new Pusher('25291c0752d6089a660c', {
+      const pusher = new Pusher('5bfed9f71dd24705a3e1', {
         cluster: 'eu'
       });
 
       const channel = pusher.subscribe('chat');
       channel.bind('message', data => {
         messages.value.push(data);
+        console.log("kaltun")
       });
     })
 
     const submit = async () => {
-      await fetch('http://localhost:3000/api/messages', {
+      await fetch('http://localhost:3001/api/messages', {
         method:'POST',
-        headers: {'Content-Type': 'application-json'},
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
           username:username.value,
           message:message.value
